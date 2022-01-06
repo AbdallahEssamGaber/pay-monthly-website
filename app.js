@@ -23,8 +23,11 @@ app.get("/",function(req, res){
 app.post("/", function(req, res){
 
   newTask = req.body.newTask;
-  if(newTask == "") res.redirect("/"); return;
-
+  console.log(newTask);
+  if(newTask == "") {
+    res.redirect("/");
+    return;
+  }
 
 
   newTasks.push(newTask);
