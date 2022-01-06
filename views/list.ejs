@@ -1,0 +1,42 @@
+<%- include("header")-%>
+
+  <div class="box" id="heading">
+    <h1><%= listTitle %></h1>
+  </div>
+  <div class="box">
+
+  </div>
+   <div class="box">
+      <% for(var i = 0; i < newTasks.length; i++){ %>
+      <div class="item">
+        <input id="<%=i%>" type="checkbox">
+        <p><%= newTasks[i] %></p>
+      </div>
+        <%}%>
+
+
+      <form class="item" action="/" method="post">
+        <input type="text" name="newTask" placeholder="new Item" autocomplete="off"/>
+        <button type="submit" name="list" value=<%= listTitle %>>+</button>
+      </form>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      if(localStorage.length > 0)
+      {
+        $.each(localStorage,function(index,item)
+        {
+            if( $("#"+index)[0] )
+            {
+                if(item == "true")
+                	$("#"+index).attr("checked","checked");
+            }
+        });
+      }
+      $('input:checkbox').on('change', function()
+      {
+          localStorage.setItem($(this).attr("id"),($(this).is(":checked") ? true : false));
+      });
+    </script>
+<%- include("footer")-%>
