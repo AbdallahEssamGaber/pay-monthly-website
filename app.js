@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const date = require(__dirname + "/date.js")
+const moment = require('moment');
 const app = express();
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
@@ -14,8 +14,8 @@ const workTasks = [];
 
 app.get("/",function(req, res){
 
-
-  res.render("list", {listTitle: date.getDate(), newTasks: newTasks});
+  const date = moment().format('D/MM/YYYY');
+  res.render("list", {listTitle: date, newTasks: newTasks});
 
 
 });
@@ -25,11 +25,6 @@ app.post("/", function(req, res){
   newTask = req.body.newTask;
   if(newTask == "") res.redirect("/"); return;
 
-  if(req.body.list === "Work"){
-    workTasks.push(newTask);
-    res.redirect("/work");
-    return;
-  }
 
 
   newTasks.push(newTask);
@@ -37,9 +32,6 @@ app.post("/", function(req, res){
 });
 
 
-app.get("/work", function(req,res){
-  res.render("list", {listTitle: "Work List", newTasks: workTasks});
-});
 
 
 app.listen(process.env.PORT || 3000, function(){
