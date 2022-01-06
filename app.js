@@ -23,7 +23,7 @@ app.get("/",function(req, res){
 app.post("/", function(req, res){
 
   newTask = req.body.newTask;
-
+  if(newTask == "") res.redirect("/"); return;
 
   if(req.body.list === "Work"){
     workTasks.push(newTask);
